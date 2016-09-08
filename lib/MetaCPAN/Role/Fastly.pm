@@ -116,6 +116,9 @@ sub perform_purges {
         $self->reset_surrogate_keys();
     }
 
+    # Needed for MC tests!
+    return 1;
+
 }
 
 =head2 datacenters()

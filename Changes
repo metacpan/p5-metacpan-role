@@ -1,6 +1,7 @@
 Revision history for Perl module MetaCPAN::Role:
 
-0.02
+0.02 Thu  8 Sep 2016 20:22:48 BST
+    - add a 'return 1' to help other MC module tests
     - Fix Changes file!
 
 0.01 Thu  8 Sep 2016 19:11:13 BST
