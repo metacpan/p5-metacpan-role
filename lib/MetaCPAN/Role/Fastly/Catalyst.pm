@@ -2,6 +2,9 @@ package MetaCPAN::Role::Fastly::Catalyst;
 
 use Moose::Role;
 
+# For dzil [AutoPreq]
+use CatalystX::Fastly::Role::Response 0.04;
+
 with 'MetaCPAN::Role::Fastly';
 with 'CatalystX::Fastly::Role::Response';
 

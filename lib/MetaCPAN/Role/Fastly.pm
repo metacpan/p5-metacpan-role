@@ -3,8 +3,11 @@ package MetaCPAN::Role::Fastly;
 # COPY BELOW HERE INTO MetaCPAN::Role::Fastly
 
 use Moose::Role;
-use Net::Fastly;
+use Net::Fastly 1.05;
 use Carp;
+
+# For dzil [AutoPreq]
+use MooseX::Fastly::Role 0.01;
 
 with 'MooseX::Fastly::Role';
 
