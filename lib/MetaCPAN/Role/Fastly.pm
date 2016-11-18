@@ -61,6 +61,8 @@ Using this array reference of L<CPAN::DistnameInfo> objects,
 the cpanid and dist name are extracted and used to build a list
 of keys to purge, the purge happens from within this method.
 
+An purge of B<DIST_UPDATES> also happens when this method is called.
+
 All other purging requires `finalize` to be implimented so it
 can be wrapped with a I<before> and called.
 
@@ -83,6 +85,7 @@ sub purge_cpan_distnameinfos {
     }
 
     my @unique_to_purge = keys %purge_keys;
+    push @unique_to_purge, 'DIST_UPDATES'; # as we have updates some dists!
 
     $self->purge_surrogate_key(@unique_to_purge);
 
@@ -112,6 +115,8 @@ sub perform_purges {
 
         # Something changed, means we need to purge some keys
         my @keys = $self->surrogate_keys_to_purge();
+
+        log
 
         $self->cdn_purge_now( { keys => \@keys, } );
 
