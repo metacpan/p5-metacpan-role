@@ -116,8 +116,6 @@ sub perform_purges {
         # Something changed, means we need to purge some keys
         my @keys = $self->surrogate_keys_to_purge();
 
-        log
-
         $self->cdn_purge_now( { keys => \@keys, } );
 
         # Rest
