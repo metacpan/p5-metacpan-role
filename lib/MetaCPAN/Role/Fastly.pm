@@ -39,20 +39,23 @@ Try to use on of the more specific methods below if possible.
 =cut
 
 sub purge_author_key {
-    my ( $self, $author ) = @_;
+    my ( $self, @authors ) = @_;
 
-    $self->purge_surrogate_key( $self->_format_auth_key($author) );
+    for my $author (@authors) {
+        $self->purge_surrogate_key( $self->_format_auth_key($author) );
+    }
 }
-
 
 =head2 $self->purge_dist_key('Moose');
 
 =cut
 
 sub purge_dist_key {
-    my ( $self, $dist ) = @_;
+    my ( $self, @dists ) = @_;
 
-    $self->purge_surrogate_key( $self->_format_dist_key($dist) );
+    for my $dist (@dists) {
+        $self->purge_surrogate_key( $self->_format_dist_key($dist) );
+    }
 }
 
 =head2 $self->purge_cpan_distnameinfos(\@list_of_distnameinfo_objects);
@@ -78,14 +81,14 @@ sub purge_cpan_distnameinfos {
         croak "Must be CPAN::DistnameInfo"
             unless $dist->isa('CPAN::DistnameInfo');
 
-        $purge_keys{ $self->_format_auth_key( $dist->cpanid ) } = 1;    # "GBARR"
+        $purge_keys{ $self->_format_auth_key( $dist->cpanid ) } = 1; # "GBARR"
         $purge_keys{ $self->_format_dist_key( $dist->dist ) }
             = 1;    # "CPAN-DistnameInfo"
 
     }
 
     my @unique_to_purge = keys %purge_keys;
-    push @unique_to_purge, 'DIST_UPDATES'; # as we have updates some dists!
+    push @unique_to_purge, 'DIST_UPDATES';    # as we have updates some dists!
 
     $self->purge_surrogate_key(@unique_to_purge);
 
@@ -103,7 +106,7 @@ has _surrogate_keys_to_purge => (
         has_surrogate_keys_to_purge  => 'count',
         surrogate_keys_to_purge      => 'elements',
         join_surrogate_keys_to_purge => 'join',
-        reset_surrogate_keys => 'clear',
+        reset_surrogate_keys         => 'clear',
     },
 );
 
